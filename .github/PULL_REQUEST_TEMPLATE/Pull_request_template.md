@@ -21,4 +21,4 @@ This is a **Merge Request** that is in need of your attention. The person whe cr
 
 ## 🔗Links
 - 👯 Web hosting company [EliasDH.com](https://eliasdh.com).
-- 📫 How to reach us elias.dehondt@outlook.com
+- 📫 How to reach us info@eliasdh.com

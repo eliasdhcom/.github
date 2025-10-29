@@ -97,4 +97,4 @@ https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/desktop
 
 ## 🔗Links
 - 👯 Web hosting company [EliasDH.com](https://eliasdh.com).
-- 📫 How to reach us elias.dehondt@outlook.com
+- 📫 How to reach us info@eliasdh.com

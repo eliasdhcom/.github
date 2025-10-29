@@ -6,7 +6,7 @@
 
 ## 🙋‍♂️ About EliasDH
   - 👯 We are a dedicated web hosting company focused on providing reliable and secure hosting solutions for our clients.
-  - 📫 Contact us at **elias.dehondt@outlook.com**
+  - 📫 Contact us at **info@eliasdh.com**
 
   - ⚡ Our Philosophy: 
       - **Keen observers of market trends. ✨**

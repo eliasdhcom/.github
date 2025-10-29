@@ -59,4 +59,4 @@ These guidelines must be followed across all projects to ensure a uniform and pr
 
 ## 🔗Links
 - 👯 Web hosting company [EliasDH.com](https://eliasdh.com).
-- 📫 How to reach us elias.dehondt@outlook.com
+- 📫 How to reach us info@eliasdh.com

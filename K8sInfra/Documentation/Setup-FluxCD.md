@@ -23,7 +23,7 @@ curl -s https://fluxcd.io/install.sh | sudo bash
 
 - Install FluxCD in your cluster:
 ```bash
-flux install
+flux install --components-extra=image-reflector-controller,image-automation-controller
 ```
 
 - Verify the installation:
@@ -31,16 +31,44 @@ flux install
 flux check
 ```
 
+- Create a deploy key for your Git repository:
+```bash
+ssh-keygen -t ed25519 -f ~/flux-deploy-key -N "" -C "flux-deploy-key"
+
+cat ~/flux-deploy-key.pub
+
+# Add this public key as a Deploy key on GitHub
+# Go to: https://github.com/eliasdhcom/gitOps/settings/keys
+# → “Add deploy key”
+# Title: flux-deploy-key
+# Key: Paste the output from above here
+# Allow write access: OFF (uncheck the box!)
+# Add key
+```
+
 - Bootstrap Flux on your repository:
 ```bash
-flux bootstrap github
-    --owner=eliasdhcom
-    --repository=gitOps
-    --branch=main
-    --path=gitops/flux
+flux bootstrap git \
+    --url=ssh://git@github.com/eliasdhcom/gitOps.git \
+    --branch=main \
+    --path=gitops/flux \
+    --private-key-file=./flux-deploy-key \
     --components-extra=image-reflector-controller,image-automation-controller
-    --personal
+
+kubectl -n flux-system create secret generic flux-ssh \
+    --type=kubernetes.io/ssh-auth \
+    --from-file=ssh-privatekey=./flux-deploy-key \
+    --from-literal=known_hosts="$(ssh-keyscan github.com 2>/dev/null)"
+
+flux reconcile source git gitops -n flux-system
 ```
+
+- Verify that all components are running:
+```bash
+flux get all
+```
+
+
 
 
 ## 🔗Links

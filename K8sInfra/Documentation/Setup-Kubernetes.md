@@ -70,6 +70,63 @@ sudo apt-mark hold kubelet kubeadm kubectl
 sudo reboot
 ```
 
+## 👉Update
+
+- Node01
+```bash
+sudo rm -f /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+
+
+apt-cache madison kubeadm | grep 1.32
+sudo apt-get install -y --allow-downgrades --allow-change-held-packages kubeadm=1.32.10-1.1
+
+kubeadm version
+
+sudo kubeadm upgrade plan
+
+sudo kubeadm upgrade apply v1.32.10
+
+sudo apt-get install -y --allow-change-held-packages kubelet=1.32.10-1.1 kubectl=1.32.10-1.1
+sudo systemctl restart kubelet
+```
+
+- Node02 & Node03
+```bash
+sudo rm -f /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+
+sudo apt-get install -y --allow-change-held-packages kubeadm=1.32.10-1.1 kubelet=1.32.10-1.1 kubectl=1.32.10-1.1
+sudo kubeadm upgrade node
+sudo systemctl restart kubelet
+```
+
+- Worker Nodes
+```bash
+sudo rm -f /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+
+# Node04
+kubectl drain node04 --ignore-daemonsets --delete-emptydir-data
+sudo apt-get install -y --allow-change-held-packages kubelet=1.32.10-1.1 kubectl=1.32.10-1.1
+sudo systemctl restart kubelet
+
+kubectl uncordon node04
+```
+
+- When you wanna upgrade the worker notes, you need to disable and afterwards enable with the following commands.
+```bash
+kubectl -n longhorn-system patch pdb instance-manager-41e2bf06e552e2c16d2a37352f60cc5c --type=merge -p '{"spec":{"minAvailable":0}}'
+
+kubectl -n longhorn-system patch pdb instance-manager-41e2bf06e552e2c16d2a37352f60cc5c --type=merge -p '{"spec":{"minAvailable":1}}'
+```
+
 ## 🔗Links
 - 👯 Web hosting company [EliasDH.com](https://eliasdh.com).
 - 📫 How to reach us info@eliasdh.com

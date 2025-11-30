@@ -1,0 +1,19 @@
+############################
+# @author EliasDH Team     #
+# @see https://eliasdh.com #
+# @since 01/01/2025        #
+############################
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sshserver
+  labels:
+    name: sshserver
+    app: sshserver
+    owner: EliasDH
+    environment: production
+  annotations:
+    description: This namespace is used for the sshserver application.
+    contact: info@eliasdh.com
+---

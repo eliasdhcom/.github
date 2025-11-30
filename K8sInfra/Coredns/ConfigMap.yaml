@@ -1,0 +1,133 @@
+############################
+# @author EliasDH Team     #
+# @see https://eliasdh.com #
+# @since 01/01/2025        #
+############################
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns
+  namespace: kube-system
+data:
+  Corefile: |
+    .:53 {
+        errors
+        health {
+            lameduck 5s
+        }
+        ready
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+            pods insecure
+            fallthrough in-addr.arpa ip6.arpa
+            ttl 30
+        }
+        prometheus :9153
+        forward . /etc/resolv.conf {
+            max_concurrent 1000
+        }
+        cache 30
+        loop
+        reload
+        loadbalance
+    }
+
+    eliasdh.com:53 {
+        errors
+        cache 30
+        hosts {
+            192.168.1.200 eliasdh.com
+            fallthrough
+        }
+    }
+
+    www.eliasdh.com:53 {
+        errors
+        cache 30
+        hosts {
+            192.168.1.200 www.eliasdh.com
+            fallthrough
+        }
+    }
+
+    flix.eliasdh.com:53 {
+        errors
+        cache 30
+        hosts {
+            192.168.1.200 flix.eliasdh.com
+            fallthrough
+        }
+    }
+
+    zizis.be:53 {
+        errors
+        cache 30
+        hosts {
+            192.168.1.200 zizis.be
+            fallthrough
+        }
+    }
+
+    www.zizis.be:53 {
+        errors
+        cache 30
+        hosts {
+            192.168.1.200 www.zizis.be
+            fallthrough
+        }
+    }
+
+    levelup.be:53 {
+        errors
+        cache 30
+        hosts {
+            192.168.1.200 levelup.be
+            fallthrough
+        }
+    }
+
+    www.levelup.be:53 {
+        errors
+        cache 30
+        hosts {
+            192.168.1.200 www.levelup.be
+            fallthrough
+        }
+    }
+
+    app.levelup.be:53 {
+        errors
+        cache 30
+        hosts {
+            192.168.1.200 app.levelup.be
+            fallthrough
+        }
+    }
+
+    display.levelup.be:53 {
+        errors
+        cache 30
+        hosts {
+            192.168.1.200 display.levelup.be
+            fallthrough
+        }
+    }
+
+    tereiken.be:53 {
+        errors
+        cache 30
+        hosts {
+            192.168.1.200 tereiken.be
+            fallthrough
+        }
+    }
+
+    www.tereiken.be:53 {
+        errors
+        cache 30
+        hosts {
+            192.168.1.200 www.tereiken.be
+            fallthrough
+        }
+    }
+---

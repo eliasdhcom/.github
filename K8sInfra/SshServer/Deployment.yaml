@@ -1,0 +1,68 @@
+############################
+# @author EliasDH Team     #
+# @see https://eliasdh.com #
+# @since 01/01/2025        #
+############################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sshserver-deployment
+  namespace: sshserver
+  labels:
+    app: sshserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sshserver
+  template:
+    metadata:
+      labels:
+        app: sshserver
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: role
+                    operator: In
+                    values:
+                      - compute
+      containers:
+        - name: sshserver-container
+          image: lscr.io/linuxserver/openssh-server:latest
+          ports:
+            - containerPort: 2222
+          env:
+          - name: TZ
+            value: "Europe/Brussels"
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          - name: TZ
+            value: "Europe/Brussels"
+          - name: USER_NAME
+            valueFrom:
+              secretKeyRef:
+                name: sshserver-secret
+                key: user
+          - name: USER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sshserver-secret
+                key: password
+          - name: PASSWORD_ACCESS
+            value: "true"
+          - name: SUDO_ACCESS
+            value: "true"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+---

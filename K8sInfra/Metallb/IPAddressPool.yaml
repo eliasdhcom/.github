@@ -1,0 +1,16 @@
+############################
+# @author EliasDH Team     #
+# @see https://eliasdh.com #
+# @since 01/01/2025        #
+############################
+---
+# This is the default address pool. 
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: address-pool-1
+  namespace: metallb-system
+spec:
+  addresses:
+    - 192.168.1.200-192.168.1.250 # 50 addresses.
+---

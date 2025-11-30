@@ -1,0 +1,20 @@
+############################
+# @author EliasDH Team     #
+# @see https://eliasdh.com #
+# @since 01/01/2025        #
+############################
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sshserver-service
+  namespace: sshserver
+spec:
+  selector:
+    app: sshserver
+  ports:
+    - protocol: TCP
+      port: 22
+      targetPort: 2222
+  type: LoadBalancer
+---

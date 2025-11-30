@@ -56,8 +56,8 @@ flux bootstrap git \
     --components-extra=image-reflector-controller,image-automation-controller
 
 kubectl -n flux-system create secret generic flux-ssh \
-    --type=kubernetes.io/ssh-auth \
-    --from-file=ssh-privatekey=./flux-deploy-key \
+    --from-file=identity=$HOME/flux-deploy-key \
+    --from-file=identity.pub=$HOME/flux-deploy-key.pub \
     --from-literal=known_hosts="$(ssh-keyscan github.com 2>/dev/null)"
 
 flux reconcile source git gitops -n flux-system
@@ -67,9 +67,6 @@ flux reconcile source git gitops -n flux-system
 ```bash
 flux get all
 ```
-
-
-
 
 ## 🔗Links
 - 👯 Web hosting company [EliasDH.com](https://eliasdh.com).

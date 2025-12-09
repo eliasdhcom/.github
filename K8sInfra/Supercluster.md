@@ -35,7 +35,6 @@ This document provides an overview of the supercluster infrastructure, including
     2. [Setup Metallb](Documentation/Setup-Metallb.md).
     3. [Setup Nginx Ingress](Documentation/Setup-NginxIngress.md).
     4. [Setup Longhorn](Documentation/Setup-Longhorn.md).
-    5. [Setup FluxCD](Documentation/Setup-FluxCD.md).
 
 - Testing: [Testing The Supercluster](Documentation/Testing-Supercluster.md).
 

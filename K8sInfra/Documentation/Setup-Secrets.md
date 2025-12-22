@@ -24,7 +24,7 @@ This document provides a step-by-step guide to setting up `Kubernetes Secrets` o
 ```bash
 kubectl create secret docker-registry github-registry \
   --docker-server=ghcr.io \
-  --docker-username=<username> \
+  --docker-username=eliasdhcom \
   --docker-password=<access_token> \
   --docker-email=<email> \
   --namespace=default
@@ -35,7 +35,7 @@ kubectl create secret docker-registry github-registry \
 ```bash
 kubectl create secret docker-registry gitlab-registry \
     --docker-server=registry.gitlab.com \
-    --docker-username=<username> \
+    --docker-username=eliasdhcom \
     --docker-password=<access_token> \
     --docker-email=<email> \
     --namespace=default
@@ -46,6 +46,11 @@ kubectl create secret docker-registry gitlab-registry \
 kubectl get secret github-registry -n webserver002 -o yaml \
   | sed "s/namespace: webserver002/namespace: webserver003/" \
   | kubectl apply -n webserver003 -f -
+```
+
+## 👉Extra: Delete a Secret
+```bash
+kubectl delete secret github-registry --namespace=default
 ```
 
 ## 🔗Links
